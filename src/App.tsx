@@ -28,14 +28,14 @@ function App() {
     <div className="app">
       <div className="sidebar">
       <div className="card">
+        <h2>Total Distance Straight </h2>
+        <p>{(distance/1000).toFixed(1)} km</p>
         {!route && !routeError && <p>Loading route...</p>}
         {routeError && <p className="error">Error fetching route: {routeError}</p>}
         {route && (
           <>
-            <h2>Straight Total Distance</h2>
+            <h2>Total Distance</h2>
             <p>{(route.distanceMeters/1000).toFixed(1)} km</p>
-            <h2>Total Distance Road</h2>
-            <p>{(distance/1000).toFixed(1)} km</p>
             <h2>Estimated Duration</h2>
             <p>{Math.round(route.durationSeconds/60)} minutes</p>
           </>
