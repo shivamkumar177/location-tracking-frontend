@@ -6,7 +6,7 @@ import './App.css'
 import { StopList, type Stop } from './stops';
 import StopListComponent from './StopList.tsx'
 import MapContainerComponent from './MapContainer.tsx';
-import { totalDistance } from './MapContainer.tsx';
+import { totalDistance } from './stops.ts';
 
 function App() {
   // const [count, setCount] = useState(0)

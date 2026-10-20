@@ -2,7 +2,7 @@ import { CircleMarker, MapContainer, Popup, TileLayer, useMap, Polyline } from '
 import 'leaflet/dist/leaflet.css';
 import {useEffect} from 'react';
 import {CategoryColors, type Stop } from './stops';
-import { type LatLngTuple, latLng} from 'leaflet'
+import { type LatLngTuple } from 'leaflet'
 
 function FlyToSelectedStop({ selectedStop, stopList }: { selectedStop: Stop['id'] | null; stopList: Stop[] }) {
   const map = useMap();
@@ -16,18 +16,6 @@ function FlyToSelectedStop({ selectedStop, stopList }: { selectedStop: Stop['id'
   }, [selectedStop, stopList, map]);
 
   return null;
-}
-
-export function totalDistance(stopList: Stop[]): number {
-  let distance: number = 0;
-  for (let i = 1; i< stopList.length; i++) {
-    const lat1 = stopList[i-1].lat;
-    const lon1 = stopList[i-1].long;
-    const lat2 = stopList[i].lat;
-    const lon2 = stopList[i].long;
-    distance += latLng(lat1, lon1).distanceTo(latLng(lat2, lon2));
-  }
-  return distance;
 }
 
 function MapContainerComponent({ stopList, 

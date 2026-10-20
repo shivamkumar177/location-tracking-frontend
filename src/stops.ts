@@ -1,3 +1,5 @@
+import { type LatLngTuple, latLng} from 'leaflet'
+
 export type Stop = {
     id: string;
     name: string;
@@ -20,3 +22,15 @@ export const StopList: Stop[] = [
   { id: '4', name: 'ION Orchard',          lat: 1.3040, long: 103.8318, category: 'shopping' },
   { id: '5', name: 'Singapore Botanic Gardens', lat: 1.3138, long: 103.8159, category: 'park' },
 ]
+
+export function totalDistance(stopList: Stop[]): number {
+  let distance: number = 0;
+  for (let i = 1; i< stopList.length; i++) {
+    const lat1 = stopList[i-1].lat;
+    const lon1 = stopList[i-1].long;
+    const lat2 = stopList[i].lat;
+    const lon2 = stopList[i].long;
+    distance += latLng(lat1, lon1).distanceTo(latLng(lat2, lon2));
+  }
+  return distance;
+}
