@@ -2,7 +2,7 @@ import { CircleMarker, MapContainer, Popup, TileLayer, useMap, Polyline } from '
 import 'leaflet/dist/leaflet.css';
 import {useEffect} from 'react';
 import {CategoryColors, type Stop } from './stops';
-import { type LatLngTuple } from 'leaflet'
+import { type Route } from './route';
 
 function FlyToSelectedStop({ selectedStop, stopList }: { selectedStop: Stop['id'] | null; stopList: Stop[] }) {
   const map = useMap();
