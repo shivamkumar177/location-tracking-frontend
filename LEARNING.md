@@ -67,9 +67,46 @@ DevTools (Cmd+Opt+I): **Console** for errors, **Elements** for CSS/box model, **
     - GeoJSON/OSRM give `[lng, lat]`; Leaflet wants `[lat, lng]`. Swap them
     - The demo server is for light testing only
 
-- [ ] **8. Optional extra (pick one)**
+- [ ] **8. Optional extra (pick one)**, skipped for now
   - Compare travel modes with the OneMap Routing API (drive/walk/cycle/public transport). Keep the token on a small backend proxy you write yourself
   - Regional distribution: planning-area boundaries from data.gov.sg ("Master Plan 2019 Planning Area Boundary") in a `GeoJSON` layer, each area coloured by number of stops
   - Filter by category with checkboxes; list and markers update together
 
-**Next:** MapLibre (WebGL vector maps, named in the job post). The concepts carry over from Leaflet.
+---
+
+## Part 2: MapLibre
+
+Same app, same props, new map component (`MapLibreMap.tsx`). `App` only changes which map it renders.
+
+| | Leaflet | MapLibre |
+|---|---|---|
+| Tiles | Pictures (raster) | Data (vector), drawn and styled in your browser |
+| Drawing | SVG/HTML | WebGL (GPU): smooth zoom, rotate, tilt, 3D |
+| Stops | One React component per marker | One data source + one style layer draws them all |
+| Coordinates | `[lat, lng]` | `[lng, lat]` (GeoJSON order) |
+| Start position | `center` + `zoom` | `initialViewState` |
+| Move the map | `useMap()` in a child component | `useRef` + `mapRef.current.flyTo(...)` |
+
+- [ ] **M1. First map**
+  - Install: `npm install maplibre-gl @vis.gl/react-maplibre`
+  - Build: `<Map>` with `initialViewState`, `mapStyle="https://tiles.openfreemap.org/styles/liberty"` (free, no key), full width/height, plus `import 'maplibre-gl/dist/maplibre-gl.css'`
+  - Watch out: with Vite, MapLibre can't find its worker file. The map shows a blank cream background, and the Console says "Worker failed to load". Fix at the top of the file: `import { setWorkerUrl } from 'maplibre-gl'`, `import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url'`, then `setWorkerUrl(workerUrl)`
+  - Done when: map of Singapore shows; right-click + drag rotates and tilts; `pitch: 60` at zoom 16 shows 3D buildings
+
+- [ ] **M2. Stops as data + a circle layer**
+  - Learn: GeoJSON `FeatureCollection`; `<Source>` (the data) vs `<Layer>` (how to draw it); expressions `['get', ...]`, `['match', ...]`, `['case', ...]`
+  - Build: stops → GeoJSON points (`[lng, lat]`!); one `circle` layer coloured by category; selected stop bigger
+  - Done when: 5 coloured dots, selected one bigger
+
+- [ ] **M3. Route lines**
+  - Build: road route as a `line` layer; straight line dashed with `line-dasharray`
+  - Watch out: `route.points` were swapped to `[lat, lng]` for Leaflet, so swap them back for MapLibre. Layers listed first are drawn underneath
+
+- [ ] **M4. Click + fly to**
+  - Learn: `useRef`; `interactiveLayerIds` + `onClick` → `e.features[0].properties.id`
+  - Build: click a dot to select it; selection change → `mapRef.current?.flyTo({ center: [lng, lat], zoom: 15 })`
+
+- [ ] **M5. Popup (optional)**
+  - Build: `<Popup>` at the selected stop
+
+**Later:** regional distribution, i.e. planning-area polygons as a `fill` layer coloured by data (a choropleth). This is where MapLibre is strongest.

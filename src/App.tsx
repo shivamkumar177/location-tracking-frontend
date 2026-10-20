@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
-// import heroImg from './assets/hero.png'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from './assets/vite.svg'
+import MapLibreMap from './MapLibreMap.tsx'
 import './App.css'
 import { StopList, type Stop } from './stops';
 import StopListComponent from './StopList.tsx'
@@ -47,9 +45,9 @@ function App() {
       </div>
       </div>
       <div className="content">
-        
+          <MapLibreMap stopList={StopList} selectedStop={selectedStop} setSelectedStop={setSelectedStop} route={route}/>
           <h2>Welcome to the Stops App</h2>
-          <MapContainerComponent stopList={StopList} selectedStop={selectedStop} setSelectedStop={setSelectedStop} route={route} />
+          {/* <MapContainerComponent stopList={StopList} selectedStop={selectedStop} setSelectedStop={setSelectedStop} route={route} /> */}
         
       </div>
     </div>
