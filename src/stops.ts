@@ -1,4 +1,4 @@
-import { type LatLngTuple, latLng} from 'leaflet'
+import { latLng} from 'leaflet'
 
 export type Stop = {
     id: string;

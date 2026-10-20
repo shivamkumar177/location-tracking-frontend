@@ -20,14 +20,18 @@ function FlyToSelectedStop({ selectedStop, stopList }: { selectedStop: Stop['id'
 
 function MapContainerComponent({ stopList, 
   selectedStop, 
-  setSelectedStop }: 
-  { stopList: Stop[]; selectedStop: Stop['id'] | null; setSelectedStop: (id: Stop['id']) => void }) {
-  const ployLinePos: LatLngTuple[] = stopList.map((stop) => [stop.lat, stop.long]);
+  setSelectedStop,
+  route
+ }: 
+  { stopList: Stop[]; selectedStop: Stop['id'] | null; setSelectedStop: (id: Stop['id']) => void; route: Route | null }) {
+  // const ployLinePos: LatLngTuple[] = stopList.map((stop) => [stop.lat, stop.long]);
   return (
     <div className="map-container">
         <MapContainer center={[1.3521, 103.8198]} zoom={12} style={{ height: '100%', width: '100%' }}>   
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <Polyline positions={ployLinePos} pathOptions={{ color: 'grey', weight: 5, dashArray: '10, 10' }} />
+        {route && (
+          <Polyline positions={route.points} pathOptions={{ color: 'blue', weight: 5 }} />
+        )}
         {stopList.map((stop: Stop)=> (
           <CircleMarker key={stop.id} center={[stop.lat, stop.long]} 
           radius={selectedStop === stop.id ? 20: 12} color={CategoryColors[stop.category]} eventHandlers={{ click: () => setSelectedStop(stop.id) }} >
