@@ -1,0 +1,41 @@
+.sidebar {
+  width: 300px;
+  padding: 16px;
+  background-color: var(--bg);
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+.stop-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  width: 100%; font: inherit; color: inherit; text-align: left; background: none;
+}
+
+.stop-card.selected {
+  background-color: var(--accent-bg);
+  box-shadow: var(--shadow);
+}
+.content {
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+  padding: 16px;
+  background-color: var(--bg);
+}
+.app {
+  display: flex;
+  height: 100vh;
+  box-sizing: border-box;
+}
+.map-container {
+  flex: 1;
+}
